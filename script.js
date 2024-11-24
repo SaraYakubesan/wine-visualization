@@ -41,6 +41,8 @@ function createBarChart(data) {
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    console.log(svg); // Check if SVG is being created
+
     // Set up scales for the X and Y axes
     const x = d3.scaleBand()
         .domain(data.map(function(d) { return d.fixed_acidity; }))  // Use fixed_acidity values for X-axis
