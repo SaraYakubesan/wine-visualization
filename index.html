@@ -3,15 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wine Visualization</title>
+    <title>Interactive Wine Visualization</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Wine Quality Distribution</h1>
+    <h1>Interactive Wine Visualization</h1>
+    <!-- Visualization Section -->
+    <section id="Visualization">
+        <div id="chart-container"></div> <!-- D3 chart will go here -->
+        <div id="chart-description">
+            <p id="description-text">
+        This bar chart visualizes the average alcohol content in different wine varieties.
+        The chart compares the alcohol content across various categories, with higher values
+        indicating wines with stronger alcohol content. Hover over the bars for detailed data.
+            </p>
 
-    <div id="chart-container">
-        <!-- The chart will be rendered here -->
-    </div>
+    </section>
+
+    <!-- Documentation and Video Links Section -->
+    <section id="Resources">
+        <h2>Learn More</h2>
+        <div class="resources-links">
+            <a href="documentation.html" class="button">View Documentation</a>
+            <a href="https://www.youtube.com/watch?v=YourVideoID" target="_blank" class="button">Watch YouTube Video</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>Created by Sara Yakubesan</p>
+    </footer>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="script.js"></script>
