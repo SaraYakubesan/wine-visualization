@@ -22,50 +22,84 @@ const tooltip = d3.select("body").append("div")
     .style("pointer-events", "none")
     .style("opacity", 0);
 
+// Get reference to the dropdown element
+const wineTypeDropdown = d3.select("#wineTypeDropdown");
+
+// Event listener for the dropdown change
+wineTypeDropdown.on("change", function() {
+    const selectedWineType = wineTypeDropdown.property("value");
+    console.log("Dropdown changed to:", selectedWineType);  // Log the selected value
+    filterAndUpdateChart(selectedWineType);  // Filter data based on the selected wine type
+});
+
+// Declare global variables
+let allData = [];  // To store the original unfiltered dataset
+let filteredData = [];  // To store the filtered data
+
 // Load data
-d3.csv("data/wine_data.csv").then(data => {
+d3.csv("data/wine_data.csv").then(loadedData => {
   // Log data to check the structure and contents
-    console.log(data);
+    console.log("Loaded data:", loadedData);
+
   // Parse the necessary data fields as numbers
-    data.forEach(function(d) {
+    loadedData.forEach(function(d) {
         d.quality = +d.quality; // Convert 'quality' to a number
         d.alcohol = +d.alcohol;   // Convert 'alcohol' to a number (ensures decimals are handled)
-        // Log to confirm conversion
-        //console.log(`Quality: ${d.quality}, Alcohol: ${d.alcohol}`);
     });
-    // Check if there are any 'alcohol' values that are NaN
-    const invalidAlcohols = data.filter(d => isNaN(d.alcohol));
-    console.log("Invalid Alcohol Data:", invalidAlcohols);  // Show rows with invalid alcohol values
 
-    // Group data by quality and count the occurrences
-    const qualityCounts = d3.rollup(
-        data,
-        v => v.length,       // Count wines
-        d => d.quality       // Group by quality
-    );
+    // Store the loaded data in the global variable
+    allData = loadedData;
+    filteredData = allData;  // Initially set the filtered data to allData (unfiltered
 
-    // Group data by quality and calculate average alcohol content per quality
-    const alcoholAvgByQuality = d3.rollup(data,
+    // Initial chart creation (defaults to all wine types)
+      filterAndUpdateChart("All");
+
+    }).catch(function(error) {
+      console.error("Error loading the data: ", error);
+    });
+
+    function filterAndUpdateChart(wineType) {
+      console.log("Filtering data for wine type:", wineType);  // Log the wine type being filtered
+      //let filteredData;
+
+      // Filter data based on the selected wine type
+    if (wineType === "All") {
+        console.log("No filter applied, showing all wines.");
+        filteredData = allData;  // Set filtered data to the original dataset (allData)
+    } else {
+        filteredData = allData.filter(d => d.type === wineType);  // Filter based on wine type
+        console.log("Filtered Data for", wineType, ":", filteredData);  // Log the filtered data
+    }
+
+      // If no data is found, return
+      if (filteredData.length === 0) {
+        console.error("No data found for the selected wine type.");
+        return;
+      }
+
+      // Group data and calculate averages
+      const qualityCounts = d3.rollup(
+        filteredData,
+        v => v.length,  // Count wines
+        d => d.quality   // Group by quality
+      );
+
+      const alcoholAvgByQuality = d3.rollup(filteredData,
         v => d3.mean(v, d => d.alcohol), // Calculate average alcohol
-        d => d.quality // Group by quality
-    );
-    console.log("Average Alcohol by Quality:", alcoholAvgByQuality);  // Log the rollup result
+        d => d.quality  // Group by quality
+      );
+      console.log("Average Alcohol by Quality:", alcoholAvgByQuality);  // Log the rollup result
 
-    // Add alcohol averages to the countsArray
-    const countsArray = Array.from(qualityCounts, ([quality, count]) => ({
+      const countsArray = Array.from(qualityCounts, ([quality, count]) => ({
         quality,
         count,
         avgAlcohol: alcoholAvgByQuality.get(+quality) // Add average alcohol content
-    })).sort((a, b) => a.quality - b.quality);
+      })).sort((a, b) => a.quality - b.quality);
 
-    console.log("Counts Array with Avg Alcohol:", countsArray);
+      console.log("Counts Array with Avg Alcohol:", countsArray);  // Log the counts array
 
-
-    // Call function to create the chart
-    createBarChart(countsArray);
-}).catch(function(error) {
-    console.error("Error loading the data: ", error);
-});
+      createBarChart(countsArray);  // Create or update the chart with filtered data
+    }
 
 // Function to create the bar chart
 function createBarChart(data) {

@@ -9,16 +9,30 @@
 </head>
 <body>
     <h1>Interactive Wine Visualization</h1>
+
+    <!-- Filtering Options -->
+    <section id="FilterOptions">
+        <label for="wineTypeDropdown">Filter by Wine Type:</label>
+        <select id="wineTypeDropdown">
+            <option value="All">All Wines</option>
+            <option value="Red">Red Wines</option>
+            <option value="White">White Wines</option>
+        </select>
+    </section>
+
     <!-- Visualization Section -->
     <section id="Visualization">
         <div id="chart-container"></div> <!-- D3 chart will go here -->
         <div id="chart-description">
             <p id="description-text">
-        This bar chart visualizes the average alcohol content in different wine varieties.
-        The chart compares the alcohol content across various categories, with higher values
-        indicating wines with stronger alcohol content. Hover over the bars for detailed data.
+              This bar chart visualizes the selected metric for different wine varieties.
+              You can filter the data by wine type (Red or White), and the chart will update accordingly.
+              Hover over the bars for detailed information, and use the dropdown menus above to customize
+              the visualization. The chart compares the data based on your selected options, giving you insights
+              into the alcohol content or other metrics for various wine categories.
             </p>
-
+            </p>
+        </div>
     </section>
 
     <!-- Documentation and Video Links Section -->
