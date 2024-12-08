@@ -45,6 +45,10 @@ d3.csv("data/wine_data.csv").then(loadedData => {
     loadedData.forEach(function(d) {
         d.quality = +d.quality; // Convert 'quality' to a number
         d.alcohol = +d.alcohol;   // Convert 'alcohol' to a number (ensures decimals are handled)
+        d.fixed_acidity = +d["fixed acidity"];
+        d.volatile_acidity = +d["volatile acidity"];
+        d.residual_sugar = +d["residual sugar"];
+        d.ph = +d.pH;
     });
 
     // Store the loaded data in the global variable
@@ -88,15 +92,38 @@ d3.csv("data/wine_data.csv").then(loadedData => {
         v => d3.mean(v, d => d.alcohol), // Calculate average alcohol
         d => d.quality  // Group by quality
       );
-      console.log("Average Alcohol by Quality:", alcoholAvgByQuality);  // Log the rollup result
+
+      const fixedAcidityAvgByQuality = d3.rollup(filteredData,
+        v => d3.mean(v, d => d.fixed_acidity), // Calculate average fixed acidity
+        d => d.quality  // Group by quality
+      );
+
+      const volatileAcidityAvgByQuality = d3.rollup(filteredData,
+        v => d3.mean(v, d => d.volatile_acidity), // Calculate average volatile acidity
+        d => d.quality  // Group by quality
+      );
+
+      const residualSugarAvgByQuality = d3.rollup(filteredData,
+        v => d3.mean(v, d => d.residual_sugar), // Calculate average residual sugar
+        d => d.quality  // Group by quality
+      );
+
+      const pHAvgByQuality = d3.rollup(filteredData,
+        v => d3.mean(v, d => d.ph), // Calculate average pH
+        d => d.quality  // Group by quality
+      );
 
       const countsArray = Array.from(qualityCounts, ([quality, count]) => ({
         quality,
         count,
-        avgAlcohol: alcoholAvgByQuality.get(+quality) // Add average alcohol content
+        avgAlcohol: alcoholAvgByQuality.get(+quality), // Add average alcohol content
+        avgFixedAcidity: fixedAcidityAvgByQuality.get(+quality) || 0,
+        avgVolatileAcidity: volatileAcidityAvgByQuality.get(+quality) || 0,
+        avgResidualSugar: residualSugarAvgByQuality.get(+quality) || 0,
+        avgPh: pHAvgByQuality.get(+quality) || 0
       })).sort((a, b) => a.quality - b.quality);
 
-      console.log("Counts Array with Avg Alcohol:", countsArray);  // Log the counts array
+      console.log("Counts Array with Avg Alcohol, Acidity, Sugar, and pH:", countsArray);  // Log the counts array
 
       createBarChart(countsArray);  // Create or update the chart with filtered data
     }
@@ -125,7 +152,7 @@ function createBarChart(data) {
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("font-weight", "bold")
-        .text("Frequency of Wine Quality Ratings");
+        .text("Wine Quality Ratings and Metrics");
 
     // Set up scales
     const x = d3.scaleBand()
@@ -149,44 +176,73 @@ function createBarChart(data) {
     console.log("Color for alcohol value 10:", colorScale(10));
 
     // Draw bars
-svg.selectAll(".bar")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("class", "bar")
-    .attr("x", d => x(d.quality))
-    .attr("y", d => {
-        const barHeight = height - y(d.count);
-        return barHeight < 5 ? height - 5 : y(d.count);  // Ensure bars don't go below x-axis
-    })
-    .attr("width", x.bandwidth())
-    .attr("height", d => {
-        const barHeight = height - y(d.count);
-        return barHeight < 5 ? 5 : barHeight;  // Minimum bar height of 5
-    })
-    .attr("fill", d => {
-        const color = colorScale(d.avgAlcohol);  // Define the color variable
-        console.log("Setting fill color for avgAlcohol:", d.avgAlcohol, "Color:", color);  // Log the color
-        return color;  // Return the color
-    })
-    .on("mouseover", function (event, d) {
-        d3.select(this).attr("fill", "#ff9800");
-        tooltip
-            .style("opacity", 1)
-            .html(`Quality: ${d.quality}<br>Count: ${d.count}<br>Avg Alcohol: ${d.avgAlcohol.toFixed(2)}`)
-            .style("left", `${event.pageX + 10}px`)
-            .style("top", `${event.pageY - 20}px`);
-    })
-    .on("mousemove", function (event) {
-        tooltip
-            .style("left", `${event.pageX + 10}px`)
-            .style("top", `${event.pageY - 20}px`);
-    })
-    .on("mouseout", function () {
-        d3.select(this).attr("fill", d => colorScale(d.avgAlcohol));
-        tooltip.style("opacity", 0);
-    });
+    svg.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", d => x(d.quality))
+        .attr("y", d => {
+            const barHeight = height - y(d.count);
+            return barHeight < 5 ? height - 5 : y(d.count);  // Ensure bars don't go below x-axis
+            })
+        .attr("width", x.bandwidth())
+        .attr("height", d => {
+            const barHeight = height - y(d.count);
+            return barHeight < 5 ? 5 : barHeight;  // Minimum bar height of 5
+            })
+        .attr("fill", d => {
+            const color = colorScale(d.avgAlcohol);  // Define the color variable
+            console.log("Setting fill color for avgAlcohol:", d.avgAlcohol, "Color:", color);  // Log the color
+            return color;  // Return the color
+            })
+        .on("mouseover", function (event, d) {
+            console.log(d);  // Log the `d` object to inspect its structure
 
+            // Ensure d is defined and has the properties you're expecting
+            if (!d) {
+                tooltip.style("opacity", 0);  // Hide the tooltip if data is invalid
+                return;
+            }
+
+            d3.select(this).attr("fill", "#ff9800");
+
+            // Handle undefined properties and provide default values
+            const quality = d.quality || "N/A";
+            const count = d.count || "N/A";
+            const avgAlcohol = isNumber(d.avgAlcohol) ? d.avgAlcohol.toFixed(2) : "N/A";
+            const avgFixedAcidity = isNumber(d.avgFixedAcidity) ? d.avgFixedAcidity.toFixed(2) : "N/A";
+            const avgVolatileAcidity = isNumber(d.avgVolatileAcidity) ? d.avgVolatileAcidity.toFixed(2) : "N/A";
+            const avgResidualSugar = isNumber(d.avgResidualSugar) ? d.avgResidualSugar.toFixed(2) : "N/A";
+            const avgPh = isNumber(d.avgPh) ? d.avgPh.toFixed(2) : "N/A";
+
+            tooltip.style("opacity", 1)
+                .html(`
+                    Quality: ${quality}<br>
+                    Count: ${count}<br>
+                    Avg Alcohol: ${avgAlcohol}<br>
+                    Avg Acidity: ${avgFixedAcidity}<br>
+                    Avg Volatile Acidity: ${avgVolatileAcidity}<br>
+                    Avg Residual Sugar: ${avgResidualSugar}<br>
+                    Avg pH: ${avgPh}
+                `)
+                .style("left", `${Math.min(event.pageX + 10, window.innerWidth - 150)}px`)
+                .style("top", `${Math.min(event.pageY - 20, window.innerHeight - 80)}px`);
+        })
+
+        .on("mousemove", function (event) {
+            tooltip
+                .style("left", `${event.pageX + 10}px`)
+                .style("top", `${event.pageY - 20}px`);
+        })
+        .on("mouseout", function () {
+            d3.select(this).attr("fill", d => colorScale(d.avgAlcohol));
+            tooltip.style("opacity", 0);
+        });
+
+        function isNumber(value) {
+            return typeof value === 'number' && !isNaN(value);
+        }
 
     // Add X-axis
     svg.append("g")
