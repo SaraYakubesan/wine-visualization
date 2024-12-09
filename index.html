@@ -12,6 +12,17 @@
 
     <!-- Filtering Options -->
     <section id="FilterOptions">
+        <!-- Metric Dropdown -->
+        <label for="metricDropdown">Choose Metric to Visualize:</label>
+        <select id="metricDropdown">
+            <option value="alcohol">Alcohol Content</option>
+            <option value="ph">pH Level</option>
+            <option value="residual_sugar">Residual Sugar</option>
+            <option value="fixed_acidity">Fixed Acidity</option>
+            <option value="volatile_acidity">Volatile Acidity</option>
+            <option value="count">Wine Count (General)</option> <!-- Option for count -->
+        </select>
+        <!-- WineType Dropdown -->
         <label for="wineTypeDropdown">Filter by Wine Type:</label>
         <select id="wineTypeDropdown">
             <option value="All">All Wines</option>
@@ -30,7 +41,6 @@
               Hover over the bars for detailed information, and use the dropdown menus above to customize
               the visualization. The chart compares the data based on your selected options, giving you insights
               into the alcohol content or other metrics for various wine categories.
-            </p>
             </p>
         </div>
     </section>
