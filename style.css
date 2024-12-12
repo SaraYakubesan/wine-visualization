@@ -74,9 +74,11 @@ h1, h2 {
 #description-text {
     font-style: italic;
     color: #d0d0d0; /* Slightly muted gray for better readability */
-    text-align: center;
-    margin: 0;
-    padding: 0;
+    text-align: center; /* Center the text */
+    margin: 0 auto; /* Center the block on the page */
+    padding: 10px; /* Add some padding for better readability */
+    max-width: 950px; /* Match the width of the chart-container */
+    line-height: 1.6; /* Improve readability with better spacing */
 }
 
 .bar {
@@ -103,8 +105,9 @@ h1, h2 {
 }
 
 .button {
+    margin-bottom: 20px; /* Space between the buttons and the footer text */
     padding: 10px 20px;
-    background-color: #bdc3c7;  /* Light Grey for buttons */
+    background-color: #bdc3c7; /* Light Grey for buttons */
     color: #2c3e50; /* Dark Gray for text */
     border: none;
     border-radius: 5px;
@@ -120,15 +123,15 @@ h1, h2 {
 
 /* New Styles for Dropdown */
 #FilterOptions {
-    margin-top: 20px;
+    margin-top: 20px; /* Space above the dropdowns */
+    margin-bottom: 20px; /* Add space below the dropdowns to separate them from the visualization */
     display: flex;
     justify-content: center;
-    gap: 20px;
-    align-items: center; /* Center items vertically */
-}
+    gap: 20px; /* Space between dropdown elements */
+    align-items: center;
 
 #FilterOptions label {
-    font-size: 14px;
+    font-size: 16px;
     color: #ffffff; /* Change label text to white */
 }
 
@@ -150,4 +153,37 @@ h1, h2 {
 
 #FilterOptions select:hover {
     border-color: #2980b9; /* Darker border on hover */
+}
+
+ul, ol {
+    text-align: center; /* Center the text block */
+    list-style-position: outside; /* Ensure bullets/numbers are outside the text block */
+    margin: 0 auto; /* Center the list container */
+    padding: 0; /* Remove default padding */
+}
+
+ul li, ol li {
+    text-align: center; /* Center-aligns the text for each item */
+    margin: 0; /* Reset margins for consistency */
+    padding: 0; /* Reset padding for consistency */
+    list-style: initial; /* Ensure default list styles (bullets/numbers) appear */
+}
+
+/* Maintain center alignment for headings */
+h3, h4, h5, h6 {
+    text-align: center;
+}
+
+/* Improve readability of paragraphs */
+p {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.footer {
+    margin-top: 20px; /* Space above the footer text */
+    text-align: center;
+    color: #d0d0d0; /* Muted gray for better readability */
+    font-size: 14px;
 }
