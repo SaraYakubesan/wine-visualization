@@ -3,6 +3,17 @@ const width = 800;
 const height = 600;
 const margin = { top: 70, right: 50, bottom: 70, left: 70 };
 
+const tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("position", "absolute")
+    .style("background", "#fff")
+    .style("border", "1px solid #ccc")
+    .style("padding", "5px 10px")
+    .style("border-radius", "4px")
+    .style("box-shadow", "0px 0px 5px rgba(0, 0, 0, 0.3)")
+    .style("pointer-events", "none")
+    .style("opacity", 0);
+
 document.addEventListener("DOMContentLoaded", function () {
 
     // Show the welcome screen initially
@@ -64,7 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Declare global variables
         let allData = [];  // To store the original unfiltered dataset
         let filteredData = [];  // To store the filtered data
-        let selectedMetric = "alcohol";  // Default metric
+        let selectedMetric = "count";  // Default metric
+
 
         // Load data
         d3.csv("data/wine_data.csv").then(loadedData => {
@@ -91,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         // Function to filter and update chart
-        function filterAndUpdateChart(wineType = "All", metric = "alcohol") {
+        function filterAndUpdateChart(wineType = "All", metric = "count") {
             console.log("Filtering data for wine type:", wineType);
             console.log("Filtering data for metric:", metric);
 
@@ -191,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .attr("fill", d => colorScale(d.avgMetric))
                 .on("mouseover", function (event, d) {
+                    console.log("Tooltip position:", event.pageX, event.pageY);  // Debugging
                     tooltip.style("opacity", 1)
                         .html(`
                             Quality: ${d.quality}<br>
