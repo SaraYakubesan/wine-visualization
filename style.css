@@ -131,7 +131,7 @@ h1, h2 {
     align-items: center;
 
 #FilterOptions label {
-    font-size: 16px;
+    font-size: 1px;
     color: #ffffff; /* Change label text to white */
 }
 
@@ -156,17 +156,21 @@ h1, h2 {
 }
 
 ul, ol {
-    text-align: center; /* Center the text block */
-    list-style-position: outside; /* Ensure bullets/numbers are outside the text block */
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
     margin: 0 auto; /* Center the list container */
     padding: 0; /* Remove default padding */
+    list-style-position: outside; /* Keep bullets outside the text block */
 }
 
 ul li, ol li {
-    text-align: center; /* Center-aligns the text for each item */
-    margin: 0; /* Reset margins for consistency */
-    padding: 0; /* Reset padding for consistency */
-    list-style: initial; /* Ensure default list styles (bullets/numbers) appear */
+    display: flex; /* Make each list item a flex container */
+    align-items: center; /* Center items vertically */
+    text-align: center; /* Center-align the text */
+    margin: 5px 0; /* Add spacing between items */
+    width: fit-content; /* Ensure the list items don’t stretch unnecessarily */
 }
 
 /* Maintain center alignment for headings */

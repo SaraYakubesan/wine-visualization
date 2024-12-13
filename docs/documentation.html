@@ -14,144 +14,43 @@
     <h3>Initial Conceptualization</h3>
     <p>When approaching this wine dataset visualization, I went through several design iterations to effectively communicate the complex relationships within the data. My initial sketches explored multiple visualization approaches:</p>
 
-    <ol>
-        <li>
-            <strong>Correlation Matrix Concept</strong>
-            <ul>
-                <li>Goal: Explore relationships between chemical properties and wine quality</li>
-                <li>Initial idea involved creating an interactive correlation heatmap</li>
-                <li>Challenges: Complexity of representing multiple variables simultaneously</li>
-            </ul>
-        </li>
-        <li>
-            <strong>Multivariate Scatter Plot</strong>
-            <ul>
-                <li>Aimed to allow dynamic exploration of different attributes</li>
-                <li>Considered using color and size to encode additional dimensions</li>
-                <li>Realized this might overwhelm users with too much information</li>
-            </ul>
-        </li>
-        <li>
-            <strong>Final Chosen Approach: Quality-Centric Bar Chart</strong>
-            <ul>
-                <li>Decided to focus on how different metrics relate to wine quality</li>
-                <li>Provides clear, digestible insights into the dataset</li>
-                <li>Allows for interactive exploration through dropdown filters</li>
-            </ul>
-        </li>
-    </ol>
+    <h4>Correlation Matrix Concept</h4>
+    <p>Goal: Explore relationships between chemical properties and wine quality. Initial idea involved creating an interactive correlation heatmap. However, this approach presented challenges in representing multiple variables simultaneously.</p>
+
+    <h4>Multivariate Scatter Plot</h4>
+    <p>Aimed to allow dynamic exploration of different attributes. Considered using color and size to encode additional dimensions but realized this might overwhelm users with too much information.</p>
+
+    <h4>Final Chosen Approach: Quality-Centric Bar Chart</h4>
+    <p>Decided to focus on how different metrics relate to wine quality. This approach provides clear, digestible insights into the dataset and allows for interactive exploration through dropdown filters.</p>
 
     <h3>Design Rationale</h3>
 
     <h4>Visualization Choices</h4>
-    <ol>
-        <li>
-            <strong>Bar Chart Design</strong>
-            <ul>
-                <li><strong>Why a Bar Chart?</strong>
-                    <ul>
-                        <li>Allows clear comparison of metrics across different wine quality levels</li>
-                        <li>Provides an intuitive way to understand how chemical properties vary with quality</li>
-                        <li>Enables easy comparison between wine types</li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <strong>Color Encoding</strong>
-            <ul>
-                <li><strong>Gradient from Light to Dark Blue</strong>
-                    <ul>
-                        <li>Represents the intensity of the metric</li>
-                        <li>Provides a visual cue for the magnitude of the attribute</li>
-                        <li>Creates a cohesive and aesthetically pleasing visualization</li>
-                    </ul>
-                </li>
-                <li><strong>Hover Interaction</strong>
-                    <ul>
-                        <li>Allows detailed exploration of specific data points</li>
-                        <li>Provides additional context without cluttering the main visualization</li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <strong>Filtering Mechanisms</strong>
-            <ul>
-                <li><strong>Metric Dropdown</strong>
-                    <ul>
-                        <li>Allows exploration of different chemical properties</li>
-                        <li>Enables users to compare various attributes easily</li>
-                    </ul>
-                </li>
-                <li><strong>Wine Type Dropdown</strong>
-                    <ul>
-                        <li>Provides ability to filter between red and white wines</li>
-                        <li>Supports comparative analysis</li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ol>
+    <p>The bar chart design was chosen for its clarity in comparing metrics across different wine quality levels. It provides an intuitive way to understand how chemical properties vary with quality and enables easy comparison between wine types.</p>
+
+    <h4>Color Encoding</h4>
+    <p>A gradient from light to dark blue represents the intensity of the metric, offering a visual cue for the magnitude of the attribute. Hover interactions allow detailed exploration of specific data points, providing additional context without cluttering the main visualization.</p>
+
+    <h4>Filtering Mechanisms</h4>
+    <p>Metric and wine type dropdown filters enable users to explore different chemical properties and compare attributes between red and white wines.</p>
 
     <h3>Key Discoveries and Insights</h3>
 
     <h4>Exploration of Wine Quality Metrics</h4>
-    <ol>
-        <li>
-            <strong>Alcohol Content Relationship</strong>
-            <ul>
-                <li>Observed that higher quality wines tend to have slightly higher alcohol content</li>
-                <li>Variation exists between red and white wines</li>
-                <li>Screenshot: [Insert screenshot showing alcohol content variation]</li>
-            </ul>
-        </li>
-        <li>
-            <strong>pH Level Patterns</strong>
-            <ul>
-                <li>Discovered subtle variations in pH across different quality levels</li>
-                <li>Noted differences between red and white wine pH distributions</li>
-                <li>Screenshot: [Insert screenshot highlighting pH variations]</li>
-            </ul>
-        </li>
-        <li>
-            <strong>Residual Sugar Insights</strong>
-            <ul>
-                <li>Explored how residual sugar correlates with wine quality</li>
-                <li>Identified interesting patterns across different wine types</li>
-                <li>Screenshot: [Insert screenshot of residual sugar distribution]</li>
-            </ul>
-        </li>
-    </ol>
+    <p><strong>Alcohol Content Relationship:</strong> Higher quality wines tend to have slightly higher alcohol content, with variation between red and white wines.</p>
+    <p><strong>pH Level Patterns:</strong> Subtle variations in pH exist across different quality levels, with notable differences between red and white wine distributions.</p>
+    <p><strong>Residual Sugar Insights:</strong> Residual sugar correlates with wine quality, revealing interesting patterns across different wine types.</p>
 
     <h2>Technical Details</h2>
-    <ul>
-        <li><strong>Technologies Used</strong>:
-            <ul>
-                <li>D3.js for visualization</li>
-                <li>JavaScript for interactivity</li>
-                <li>HTML/CSS for page structure and styling</li>
-            </ul>
-        </li>
-        <li><strong>Data Source</strong>: Wine quality dataset with 13 chemical properties</li>
-        <li><strong>Visualization Type</strong>: Interactive bar chart with dynamic filtering</li>
-    </ul>
+    <p><strong>Technologies Used:</strong> D3.js for visualization, JavaScript for interactivity, and HTML/CSS for page structure and styling.</p>
+    <p><strong>Data Source:</strong> Wine quality dataset with 13 chemical properties.</p>
+    <p><strong>Visualization Type:</strong> Interactive bar chart with dynamic filtering.</p>
 
     <h2>Challenges and Learning Outcomes</h2>
-    <ul>
-        <li>Data preprocessing and cleaning</li>
-        <li>Creating meaningful, interactive visualizations</li>
-        <li>Balancing information density with user comprehension</li>
-        <li>Implementing responsive design principles</li>
-    </ul>
+    <p>Faced challenges in data preprocessing and cleaning, creating meaningful interactive visualizations, balancing information density with user comprehension, and implementing responsive design principles.</p>
 
     <h2>Future Improvements</h2>
-    <ul>
-        <li>Add more interactive features</li>
-        <li>Implement additional visualization types</li>
-        <li>Create more detailed tooltips</li>
-        <li>Develop comparative views across wine types</li>
-    </ul>
+    <p>Future iterations may include additional interactive features, new visualization types, more detailed tooltips, and comparative views across wine types.</p>
 
     <h2>Conclusion</h2>
     <p>This visualization provides an accessible way to explore the complex chemical properties of wines, offering insights into how different attributes relate to wine quality.</p>
