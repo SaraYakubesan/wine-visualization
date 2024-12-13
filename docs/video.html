@@ -4,8 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wine Quality Visualization Video</title>
+    <style>
+        /* Centering the video container */
+        .video-container {
+            display: flex;
+            justify-content: center; /* Centers the iframe horizontally */
+            align-items: center; /* Centers the iframe vertically */
+            height: 100vh; /* Takes full viewport height */
+            margin: 0; /* Removes any default margins */
+        }
+        iframe {
+            width: 95%; /* Sets the width to 80% of the container */
+            height: 95%; /* Sets the height to 45% of the container */
+            max-width: 100%; /* Ensures the video doesn't exceed the container width */
+            max-height: 100%; /* Ensures the video doesn't exceed the container height */
+        }
+    </style>
 </head>
 <body>
-    <iframe width="800" height="450" src="https://youtu.be/uzxXpcYhOnc" frameborder="0" allowfullscreen></iframe>
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/uzxXpcYhOnc?si=TuefaBsVlDtYXgR4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
 </body>
 </html>
